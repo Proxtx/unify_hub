@@ -1,0 +1,21 @@
+@font-face {
+  font-family: Rubik;
+  src: url(/lib/Rubik-Regular.ttf);
+}
+
+:host,
+:root,
+m-overwrite-container {
+  --accentColor: #698f3f;
+  --accentColorTransparent: #688f3f2e;
+  --backgroundColor: #fbfaf8;
+  --textColor: #0a122a;
+  --contentSpacing: 2px;
+  --fontFamily: Rubik;
+}
+
+body {
+  font-family: Rubik;
+  margin: 0;
+  background-color: var(--backgroundColor);
+}

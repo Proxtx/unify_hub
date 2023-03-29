@@ -1,0 +1,25 @@
+{
+  "name": "unify_hub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "test": "nodemon ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Proxtx/unify_hub.git"
+  },
+  "author": "Proxtx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Proxtx/unify_hub/issues"
+  },
+  "homepage": "https://github.com/Proxtx/unify_hub#readme",
+  "dependencies": {
+    "@proxtx/config": "^1.0.2",
+    "@proxtx/framework": "^1.5.8",
+    "@proxtx/material": "^1.2.91"
+  }
+}
