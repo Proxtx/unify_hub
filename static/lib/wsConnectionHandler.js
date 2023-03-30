@@ -24,5 +24,6 @@ export const connect = async () => {
 
   while (ws.readyState !== WebSocket.CLOSED) {
     ws.send("PING");
+    await new Promise((r) => setTimeout(r, 500));
   }
 };
