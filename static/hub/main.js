@@ -107,16 +107,20 @@ const loadActiveScene = async () => {
     scenes[order[index]].config ? scenes[order[index]].config : {}
   );
 
+  renewTimeout();
+};
+
+const renewTimeout = () => {
   if (currentTimeout) window.clearTimeout(currentTimeout);
 
   currentTimeout = window.setTimeout(() => {
     index = 0;
     loadActiveScene();
-  }, 10000 * 60 * 3);
+  }, 1000 * 60 * 3);
 };
 
 document.addEventListener("click", () => {
-  if (currentTimeout) window.clearTimeout(currentTimeout);
+  if (currentTimeout) renewTimeout();
 });
 
 loadActiveScene();
@@ -136,12 +140,7 @@ framework.ws.addModule(
           scene.options
         );
 
-        if (currentTimeout) window.clearTimeout(currentTimeout);
-
-        currentTimeout = window.setTimeout(() => {
-          index = 0;
-          loadActiveScene();
-        }, 10000 * 60 * 3);
+        renewTimeout();
       }
     },
 
