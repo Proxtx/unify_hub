@@ -135,10 +135,7 @@ framework.ws.addModule(
         await loadActiveScene();
       } else {
         title.innerText = scene.title;
-        await loadScreen(
-          "/screens/" + scene.app + "/index.html",
-          scene.options
-        );
+        await loadScreen("/screens/" + scene.app + "/index.html", scene);
 
         renewTimeout();
       }
