@@ -135,6 +135,7 @@ framework.ws.addModule(
         index = order.indexOf(scene);
         await loadActiveScene();
       } else {
+        index--;
         title.innerText = scene.title;
         await loadScreen("/screens/" + scene.app + "/index.html", scene);
 
