@@ -8,8 +8,14 @@ const id = localStorage.id
   : Math.floor(Math.random() * 100000);
 localStorage.id = id;
 
-let pwd = "test";
-//let pwd = config.pwd;
+const meta = await framework.load("meta.js");
+
+while (!(await meta.auth(cookie.pwd))) {
+  cookie.pwd = prompt("Pwd");
+}
+
+let pwd = cookie.pwd;
+
 const config = await scenesAPI.scenes(pwd);
 const order = config.order;
 const scenes = config.scenes;
@@ -60,8 +66,15 @@ const loadScreen = async (path, options) => {
   window.screenOptions[id] = options;
   let oW = document.createElement("div");
   let w = document.createElement("div");
+  let styleLink = document.createElement("link");
+  styleLink.href = "/lib/main.css";
+  styleLink.rel = "stylesheet";
+
+  w.style.height = "100%";
+  oW.style.height = "100%";
 
   w.innerHTML = html;
+  w.appendChild(styleLink);
 
   w.querySelectorAll("script").forEach((elem) => {
     let text = document.createTextNode(elem.innerHTML);
