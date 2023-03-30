@@ -1,21 +1,31 @@
-/*document.getElementById("button").addEventListener("click", () => {
-  document.documentElement.requestFullscreen();
-});
-
-document.getElementById("close").addEventListener("click", () => {
-  document.exitFullscreen();
-});
-
-alert(window.innerWidth);
-alert(window.innerHeight);
-*/
 import * as _ from "/lib/guiLoader.js";
+import { connect } from "../lib/wsConnectionHandler.js";
+
+const scenesAPI = await framework.load("scenes.js");
+
+const id = localStorage.id
+  ? localStorage.id
+  : Math.floor(Math.random() * 100000);
+localStorage.id = id;
+
+let pwd = "test";
+//let pwd = config.pwd;
+const config = await scenesAPI.scenes(pwd);
+const order = config.order;
+const scenes = config.scenes;
+let index = 0;
 
 window.screenOptions = {};
 
 const next = document.getElementById("next");
 const previous = document.getElementById("previous");
 const content = document.getElementById("content");
+const darken = document.getElementById("darken");
+const title = document.getElementById("title");
+
+content.addEventListener("click", () => {
+  document.documentElement.requestFullscreen();
+});
 
 await uiBuilder.ready(next);
 await uiBuilder.ready(previous);
@@ -29,24 +39,101 @@ previous.component.textComponent.style.fontSize = "200%";
 next.innerHTML = ">";
 previous.innerHTML = "<";
 
+next.addEventListener("click", () => {
+  index++;
+  loadActiveScene();
+});
+
+previous.addEventListener("click", () => {
+  index--;
+  loadActiveScene();
+});
+
 let currentScreen = {};
 
 const loadScreen = async (path, options) => {
   content.innerHTML = "";
   const id = Math.floor(Math.random() * 10000);
   let html = await (await fetch(path)).text();
-  html.replace("$ID", id);
-  options.isRunning = true;
+  html = html.replace("$ID", id);
+  options.isVisible = true;
   window.screenOptions[id] = options;
   let oW = document.createElement("div");
   let w = document.createElement("div");
+
   w.innerHTML = html;
+
+  w.querySelectorAll("script").forEach((elem) => {
+    let text = document.createTextNode(elem.innerHTML);
+    let newScript = document.createElement("script");
+
+    Array.from(elem.attributes).forEach((attr) => {
+      newScript.setAttribute(attr.name, attr.value);
+    });
+
+    newScript.appendChild(text);
+
+    elem.parentNode.replaceChild(newScript, elem);
+  });
   let shadow = oW.attachShadow({ mode: "open" });
   shadow.appendChild(w);
   content.appendChild(oW);
   options.document = shadow;
 
-  currentScreen.isRunning = false;
+  currentScreen.isVisible = false;
 };
 
-loadScreen("/screens/hub_time/index.html", {});
+let currentTimeout;
+
+const loadActiveScene = async () => {
+  if (index <= -1) index = order.length + index;
+  if (index >= order.length) index = index - order.length;
+  title.innerText = order[index];
+  await loadScreen(
+    "/screens/" + scenes[order[index]].app + "/index.html",
+    scenes[order[index]].options ? scenes[order[index]].options : {}
+  );
+
+  currentTimeout = window.setTimeout(() => {
+    index = 0;
+    loadActiveScene();
+  }, 10000 * 60 * 3);
+};
+
+document.addEventListener("click", () => {
+  if (currentTimeout) window.clearTimeout(currentTimeout);
+});
+
+loadActiveScene();
+
+framework.ws.addModule(
+  {
+    id,
+
+    switchScene: async (scene) => {
+      if (typeof scene == "string") {
+        index = order.indexOf(scene);
+        await loadActiveScene();
+      } else {
+        title.innerText = scene.title;
+        await loadScreen(
+          "/screens/" + scene.app + "/index.html",
+          scene.options
+        );
+
+        currentTimeout = window.setTimeout(() => {
+          index = 0;
+          loadActiveScene();
+        }, 10000 * 60 * 3);
+      }
+    },
+
+    darken: async (enable) => {
+      if (enable) darken.style.display = "unset";
+      else darken.style.display = "none";
+    },
+  },
+  "sceneDisplay"
+);
+
+await connect();

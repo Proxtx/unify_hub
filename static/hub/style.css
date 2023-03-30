@@ -24,3 +24,25 @@
   height: 50%;
   --fontSize: 200%;
 }
+
+#titleWrap {
+  color: var(--backgroundColor);
+  background-color: var(--secondaryBackgroundColor);
+}
+
+#contentWrap {
+  width: 100%;
+}
+
+#darken {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+
+  z-index: 1;
+
+  display: none;
+}

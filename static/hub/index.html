@@ -7,13 +7,13 @@
     <title>Hub</title>
   </head>
   <body>
+    <div id="darken"></div>
     <m-overwrite-container>
-      <!--div>
-      <m-button id="button">Hello</m-button>
-      <m-button id="close">Close</m-button>
-    </div-->
       <div id="wrap">
-        <div id="content"></div>
+        <div id="contentWrap" class="flexColumn">
+          <div id="titleWrap"><h2 id="title">Time</h2></div>
+          <div id="content"></div>
+        </div>
         <div id="navigation">
           <m-button id="next" type="contained" stretch="true">Next</m-button>
           <m-button id="previous" type="contained" stretch="true"
