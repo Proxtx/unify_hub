@@ -6,7 +6,7 @@ global.handler = async (module) => {
   const id = await module.id;
   let func = async (method, value) => {
     try {
-      if (!(await module[method](value)).success) delete callbacks[id];
+      if (!(await module[method](value)).success) delete devices[id];
     } catch {}
   };
   devices[id] = func;
