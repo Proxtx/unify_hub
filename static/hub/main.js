@@ -104,8 +104,10 @@ const loadActiveScene = async () => {
   title.innerText = order[index];
   await loadScreen(
     "/screens/" + scenes[order[index]].app + "/index.html",
-    scenes[order[index]].options ? scenes[order[index]].options : {}
+    scenes[order[index]].config ? scenes[order[index]].config : {}
   );
+
+  if (currentTimeout) window.clearTimeout(currentTimeout);
 
   currentTimeout = window.setTimeout(() => {
     index = 0;
@@ -133,6 +135,8 @@ framework.ws.addModule(
           "/screens/" + scene.app + "/index.html",
           scene.options
         );
+
+        if (currentTimeout) window.clearTimeout(currentTimeout);
 
         currentTimeout = window.setTimeout(() => {
           index = 0;
