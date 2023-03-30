@@ -11,7 +11,7 @@ localStorage.id = id;
 const meta = await framework.load("meta.js");
 
 while (!(await meta.auth(cookie.pwd))) {
-  cookie.pwd = prompt("Pwd");
+  cookie.pwd = prompt("pwd");
 }
 
 let pwd = cookie.pwd;
