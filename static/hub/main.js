@@ -121,6 +121,7 @@ const renewTimeout = () => {
 
 document.addEventListener("click", () => {
   if (currentTimeout) renewTimeout();
+  darken.style.display = "none";
 });
 
 loadActiveScene();
