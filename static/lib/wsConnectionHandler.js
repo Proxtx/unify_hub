@@ -19,4 +19,10 @@ export const connect = async () => {
     console.log("connection lost");
     connect();
   });
+
+  let ws = result.ws;
+
+  while (ws.readyState !== WebSocket.CLOSED) {
+    ws.send("PING");
+  }
 };
