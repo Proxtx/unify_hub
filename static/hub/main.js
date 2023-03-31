@@ -141,11 +141,23 @@ framework.ws.addModule(
 
         renewTimeout();
       }
+
+      return { success: true };
     },
 
     darken: async (enable) => {
       if (enable) darken.style.display = "unset";
       else darken.style.display = "none";
+      return { success: true };
+    },
+
+    info: () => {
+      return {
+        index,
+        name: order[index],
+        scene: scenes[order[index]],
+        success: true,
+      };
     },
   },
   "sceneDisplay"
