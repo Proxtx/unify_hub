@@ -3,7 +3,7 @@
   src: url(/lib/Rubik-Regular.ttf);
 }
 
-:host,
+/*:host,
 :root,
 m-overwrite-container {
   --accentColor: #698f3f;
@@ -13,6 +13,18 @@ m-overwrite-container {
   --contentSpacing: 2px;
   --fontFamily: Rubik;
   --secondaryBackgroundColor: #0a122a;
+}*/
+
+:host,
+:root,
+m-overwrite-container {
+  --accentColor: #8eb1c7;
+  --accentColorTransparent: #8eb1c72e;
+  --backgroundColor: #fefdff;
+  --textColor: #28262c;
+  --contentSpacing: 2px;
+  --fontFamily: Rubik;
+  --secondaryBackgroundColor: #28262c;
 }
 
 body {
