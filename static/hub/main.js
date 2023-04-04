@@ -156,6 +156,7 @@ framework.ws.addModule(
         index,
         name: order[index],
         scene: scenes[order[index]],
+        sleeping: darken.style.display == "none",
         success: true,
       };
     },
