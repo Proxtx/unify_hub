@@ -79,42 +79,41 @@ const loadScreen = async (path, options) => {
     }
   ).finished;
 
+  currentScreen.isVisible = false;
+
   content.innerHTML = "";
-  const id = Math.floor(Math.random() * 10000);
+
+  const id = Math.floor(Math.random() * 10000000);
   let html = await (await fetch(path)).text();
   html = html.replace("$ID", id);
+
   options.isVisible = true;
   window.screenOptions[id] = options;
+
   let oW = document.createElement("div");
   let w = document.createElement("div");
   let styleLink = document.createElement("link");
   styleLink.href = "/lib/main.css";
   styleLink.rel = "stylesheet";
-
   w.style.height = "100%";
   oW.style.height = "100%";
-
   w.innerHTML = html;
   w.appendChild(styleLink);
 
   w.querySelectorAll("script").forEach((elem) => {
     let text = document.createTextNode(elem.innerHTML);
     let newScript = document.createElement("script");
-
     Array.from(elem.attributes).forEach((attr) => {
       newScript.setAttribute(attr.name, attr.value);
     });
-
     newScript.appendChild(text);
-
     elem.parentNode.replaceChild(newScript, elem);
   });
+
   let shadow = oW.attachShadow({ mode: "open" });
   shadow.appendChild(w);
   content.appendChild(oW);
   options.document = shadow;
-
-  currentScreen.isVisible = false;
 
   currentScreen = options;
 
@@ -194,7 +193,7 @@ framework.ws.addModule(
         index,
         name: order[index],
         scene: scenes[order[index]],
-        sleeping: darken.style.display == "none",
+        sleeping: darken.style.display != "none",
         success: true,
       };
     },
