@@ -64,6 +64,21 @@ previous.addEventListener("click", () => {
 let currentScreen = {};
 
 const loadScreen = async (path, options) => {
+  await content.animate(
+    [
+      {
+        opacity: 1,
+      },
+      {
+        opacity: 0,
+      },
+    ],
+    {
+      duration: 100,
+      fill: "forwards",
+    }
+  ).finished;
+
   content.innerHTML = "";
   const id = Math.floor(Math.random() * 10000);
   let html = await (await fetch(path)).text();
@@ -100,6 +115,23 @@ const loadScreen = async (path, options) => {
   options.document = shadow;
 
   currentScreen.isVisible = false;
+
+  currentScreen = options;
+
+  await content.animate(
+    [
+      {
+        opacity: 0,
+      },
+      {
+        opacity: 1,
+      },
+    ],
+    {
+      duration: 100,
+      fill: "forwards",
+    }
+  ).finished;
 };
 
 let currentTimeout;
