@@ -28,10 +28,16 @@ const previous = document.getElementById("previous");
 const content = document.getElementById("content");
 const darken = document.getElementById("darken");
 const title = document.getElementById("title");
+const wrap = document.getElementById("wrap");
 
 content.addEventListener("click", () => {
   document.documentElement.requestFullscreen();
 });
+
+window.addEventListener(
+  "resize",
+  () => (wrap.style.height = window.innerHeight + "px")
+);
 
 await uiBuilder.ready(next);
 await uiBuilder.ready(previous);
