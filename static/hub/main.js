@@ -158,7 +158,7 @@ const renewTimeout = () => {
 
 document.addEventListener("click", () => {
   if (currentTimeout) renewTimeout();
-  darken.style.display = "none";
+  if (window.innerHeight == screen.height) darken.style.display = "none";
 });
 
 loadActiveScene();
