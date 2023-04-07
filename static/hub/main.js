@@ -30,7 +30,7 @@ const darken = document.getElementById("darken");
 const title = document.getElementById("title");
 const wrap = document.getElementById("wrap");
 
-content.addEventListener("click", () => {
+document.addEventListener("click", () => {
   document.documentElement.requestFullscreen();
 });
 
