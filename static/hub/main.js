@@ -152,7 +152,7 @@ const renewTimeout = () => {
   currentTimeout = window.setTimeout(() => {
     index = 0;
     loadActiveScene();
-  }, 1000 * 60 * 5);
+  }, 1000 * 60 * 3);
 };
 
 document.addEventListener("click", () => {
