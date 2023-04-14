@@ -139,12 +139,11 @@ const loadActiveScene = async () => {
   if (index <= -1) index = order.length + index;
   if (index >= order.length) index = index - order.length;
   title.innerText = order[index];
+  renewTimeout();
   await loadScreen(
     "/screens/" + scenes[order[index]].app + "/index.html",
     scenes[order[index]].config ? scenes[order[index]].config : {}
   );
-
-  renewTimeout();
 };
 
 const renewTimeout = () => {
