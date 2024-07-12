@@ -19,6 +19,8 @@ let pwd = cookie.pwd;
 const config = await scenesAPI.scenes(pwd);
 const order = config.order;
 const scenes = config.scenes;
+window.scenes = scenes;
+window.order = order;
 let index = 0;
 
 window.screenOptions = {};
@@ -144,6 +146,16 @@ const loadActiveScene = async () => {
     "/screens/" + scenes[order[index]].app + "/index.html",
     scenes[order[index]].config ? scenes[order[index]].config : {}
   );
+};
+
+window.loadSceneApp = async (appName) => {
+  for (let sceneIndex in scenes) {
+    if (scenes[sceneIndex].app == appName) {
+      index = sceneIndex;
+      await loadActiveScene();
+      return;
+    }
+  }
 };
 
 const renewTimeout = () => {
