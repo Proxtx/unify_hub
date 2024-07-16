@@ -23,6 +23,16 @@ window.scenes = scenes;
 window.order = order;
 let index = 0;
 
+for (let scene in scenes) {
+  try {
+    let text = await (
+      await fetch("/screens/" + scenes[scene].app + "/worker.js")
+    ).text();
+    let config = scenes[scene].config;
+    eval(text);
+  } catch {}
+}
+
 window.screenOptions = {};
 
 const next = document.getElementById("next");
@@ -149,13 +159,18 @@ const loadActiveScene = async () => {
 };
 
 window.loadSceneApp = async (appName) => {
-  for (let sceneIndex in scenes) {
-    if (scenes[sceneIndex].app == appName) {
-      index = sceneIndex;
+  for (let sceneName in scenes) {
+    if (scenes[sceneName].app == appName) {
+      index = order.indexOf(sceneName);
       await loadActiveScene();
       return;
     }
   }
+};
+
+window.loadSceneIndex = async (pIndex) => {
+  index = pIndex;
+  await loadActiveScene();
 };
 
 const renewTimeout = () => {
